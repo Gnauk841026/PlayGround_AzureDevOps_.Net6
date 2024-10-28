@@ -34,25 +34,22 @@ steps:
   displayName: 'Run Web Application'
 
 - script: |
-    mkdir TestResults
     cd MyWebApp.Tests
     dotnet add package coverlet.msbuild
     dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura
     ls $(Build.SourcesDirectory)/TestResults
   displayName: 'Run Unit Tests with Coverage'
 
-- task: PublishTestResults@2
-  inputs:
-    testResultsFormat: 'VSTest'
-    testResultsFiles: '$(Build.SourcesDirectory)/TestResults/test_results.trx'
-    failTaskOnFailedTests: true
-  displayName: 'Publish Test Results'
+# - task: PublishTestResults@2
+#   inputs:
+#     testResultsFormat: 'VSTest'
+#     testResultsFiles: '$(Build.SourcesDirectory)/TestResults/test_results.trx'
+#     failTaskOnFailedTests: true
+#   displayName: 'Publish Test Results'
 
-- task: PublishCodeCoverageResults@1
+- task: PublishCodeCoverageResults@2
   inputs:
-    codeCoverageTool: 'Cobertura'
-    summaryFileLocation: '$(Build.SourcesDirectory)/TestResults/coverage.cobertura.xml'
-  displayName: 'Publish Code Coverage Results'
+    summaryFileLocation: 'MyWebApp.Tests/coverage.cobertura.xml'
 
 - task: ArchiveFiles@2
   inputs:
