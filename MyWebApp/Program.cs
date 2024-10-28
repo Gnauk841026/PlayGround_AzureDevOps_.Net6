@@ -1,3 +1,4 @@
+// Program.cs
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -39,12 +40,3 @@ app.MapRazorPages();
 app.MapGet("/greeting", (MyService myService) => myService.GetGreeting());
 
 app.Run();
-
-// MyService 類定義
-public class MyService
-{
-    public string GetGreeting()
-    {
-        return "Hello, welcome to Simple Web App!";
-    }
-}
