@@ -53,7 +53,7 @@ steps:
     targetdir: 'MyWebApp.Tests'
     publishCodeCoverageResults: true
 
-- publish: $(Build.SourcesDirectory)/coveragereport
+- publish: $(Build.SourcesDirectory)/MyWebApp.Tests
   artifact: CoverageReports
   
 # - task: PublishCodeCoverageResults@2
