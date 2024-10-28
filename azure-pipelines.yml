@@ -47,6 +47,11 @@ steps:
 #     failTaskOnFailedTests: true
 #   displayName: 'Publish Test Results'
 
+- task: reportgenerator@5
+  inputs:
+    reports: 'coverage.cobertura.xml'
+    targetdir: 'MyWebApp.Tests'
+
 - task: PublishCodeCoverageResults@2
   inputs:
     summaryFileLocation: 'MyWebApp.Tests/coverage.cobertura.xml'
