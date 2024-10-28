@@ -1,0 +1,63 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: '7.x'
+
+- script: |
+    dotnet restore
+  displayName: 'Restore NuGet Packages'
+
+- script: |
+    dotnet build --configuration $(buildConfiguration)
+  displayName: 'Build Solution'
+
+- script: |
+    dotnet run --project MyWebApp --urls "http://localhost:5001"
+  displayName: 'Run Web Application'
+
+- script: |
+    dotnet test --configuration $(buildConfiguration) --collect:"XPlat Code Coverage"
+  displayName: 'Run Unit Tests with Coverage'
+
+- task: PublishTestResults@2
+  inputs:
+    testResultsFormat: 'JUnit'
+    testResultsFiles: '**/TestResults/*.xml'
+    failTaskOnFailedTests: true
+  displayName: 'Publish Test Results'
+
+- script: |
+    dotnet tool install -g dotnet-format
+    dotnet-format --check
+  displayName: 'Style Check with StyleCop Analyzers'
+
+- task: PublishCodeCoverageResults@1
+  inputs:
+    codeCoverageTool: 'Cobertura'
+    summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/coverage.cobertura.xml'
+  displayName: 'Publish Code Coverage Results'
+
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: '$(Build.SourcesDirectory)'
+    includeRootFolder: false
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+    replaceExistingArchive: true
+  displayName: 'Archive Build Artifacts'
+
+- publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+  artifact: drop
+  displayName: 'Publish Artifact'
