@@ -20,16 +20,19 @@ steps:
   displayName: 'Restore NuGet Packages'
 
 - script: |
+    cd MyWebApp
     dotnet build --configuration $(buildConfiguration)
   displayName: 'Build Solution'
   env:
     buildConfiguration: $(buildConfiguration)
 
 - script: |
+    cd MyWebApp
     dotnet run --project MyWebApp --urls "http://localhost:5001"
   displayName: 'Run Web Application'
 
 - script: |
+    cd MyWebApp.Tests
     dotnet test --configuration $(buildConfiguration) --collect:"XPlat Code Coverage"
   displayName: 'Run Unit Tests with Coverage'
 
