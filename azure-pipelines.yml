@@ -36,6 +36,7 @@ steps:
 - script: |
     mkdir TestResults
     cd MyWebApp.Tests
+    dotnet add package coverlet.msbuild
     dotnet test --configuration $buildConfiguration /p:CollectCoverage=true /p:CoverletOutputFormat="cobertura" /p:CoverletOutput="$(Build.SourcesDirectory)/TestResults/" --logger "trx;LogFileName=$(Build.SourcesDirectory)/TestResults/test_results.trx"
     ls $(Build.SourcesDirectory)/TestResults
   displayName: 'Run Unit Tests with Coverage'
