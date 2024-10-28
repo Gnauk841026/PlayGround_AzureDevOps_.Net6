@@ -27,6 +27,7 @@ steps:
 #     buildConfiguration: $(buildConfiguration)
 
 - script: |
+    ls
     cd MyWebApp
     dotnet run --project MyWebApp --urls "http://localhost:5001"
   displayName: 'Run Web Application'
