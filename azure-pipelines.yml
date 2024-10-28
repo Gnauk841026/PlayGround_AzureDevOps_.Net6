@@ -34,6 +34,7 @@ steps:
   displayName: 'Run Web Application'
 
 - script: |
+    mkdir TestResults
     cd MyWebApp.Tests
     dotnet test --configuration $(buildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)/TestResults/ --logger "trx;LogFileName=$(Build.SourcesDirectory)/TestResults/test_results.trx"
     ls $(Build.SourcesDirectory)/TestResults
