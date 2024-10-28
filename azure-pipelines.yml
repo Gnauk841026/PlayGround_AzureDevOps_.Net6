@@ -49,7 +49,7 @@ steps:
 
 - task: reportgenerator@5
   inputs:
-    reports: 'coverage.cobertura.xml'
+    reports: '/home/vsts/work/1/s/MyWebApp.Tests/coverage.cobertura.xml'
     targetdir: 'MyWebApp.Tests'
 
 - task: PublishCodeCoverageResults@2
