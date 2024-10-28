@@ -29,8 +29,7 @@ steps:
 - script: |
     ls
     cd MyWebApp
-    dotnet run
-    sleep 10
+    dotnet run & sleep 10
     lsof -ti:5001 | xargs kill
   displayName: 'Run Web Application'
 
