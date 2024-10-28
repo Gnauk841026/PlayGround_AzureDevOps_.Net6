@@ -35,7 +35,8 @@ steps:
 
 - script: |
     cd MyWebApp.Tests
-    dotnet test
+    dotnet test --configuration $(buildConfiguration)  /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura --logger "trx;LogFileName=test_results.trx"
+    ls
   displayName: 'Run Unit Tests with Coverage'
 
 - task: PublishTestResults@2
