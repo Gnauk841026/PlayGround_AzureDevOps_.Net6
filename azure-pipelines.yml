@@ -31,7 +31,7 @@ steps:
     cd MyWebApp
     dotnet run
     sleep 10
-    pkill -f "dotnet run"
+    lsof -ti:5001 | xargs kill
   displayName: 'Run Web Application'
 
 - script: |
