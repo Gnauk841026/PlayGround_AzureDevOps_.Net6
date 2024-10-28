@@ -30,6 +30,8 @@ steps:
     ls
     cd MyWebApp
     dotnet run
+    sleep 10
+    pkill -f "dotnet run"
   displayName: 'Run Web Application'
 
 - script: |
