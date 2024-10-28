@@ -51,10 +51,14 @@ steps:
   inputs:
     reports: '/home/vsts/work/1/s/MyWebApp.Tests/coverage.cobertura.xml'
     targetdir: 'MyWebApp.Tests'
+    publishCodeCoverageResults: true
 
-- task: PublishCodeCoverageResults@2
-  inputs:
-    summaryFileLocation: 'MyWebApp.Tests/coverage.cobertura.xml'
+- publish: $(Build.SourcesDirectory)/coveragereport
+  artifact: CoverageReports
+  
+# - task: PublishCodeCoverageResults@2
+#   inputs:
+#     summaryFileLocation: 'MyWebApp.Tests/coverage.cobertura.xml'
 
 - task: ArchiveFiles@2
   inputs:
