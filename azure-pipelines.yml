@@ -19,12 +19,12 @@ steps:
     dotnet restore
   displayName: 'Restore NuGet Packages'
 
-- script: |
-    cd MyWebApp
-    dotnet build --configuration $(buildConfiguration)
-  displayName: 'Build Solution'
-  env:
-    buildConfiguration: $(buildConfiguration)
+# - script: |
+#     cd MyWebApp
+#     dotnet build --configuration $(buildConfiguration)
+#   displayName: 'Build Solution'
+#   env:
+#     buildConfiguration: $(buildConfiguration)
 
 - script: |
     cd MyWebApp
