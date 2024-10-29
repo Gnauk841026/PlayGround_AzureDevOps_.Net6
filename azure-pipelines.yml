@@ -7,7 +7,7 @@ trigger:
 - main
 
 pool:
-  vmImage: windows-lastest
+  vmImage: windows-latest
 
 steps:
 - task: UseDotNet@2
