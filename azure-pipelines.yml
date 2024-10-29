@@ -26,34 +26,34 @@ steps:
     dotnet build
   displayName: 'Build Solution'
 
-- script: |
-    ls
-    cd MyWebApp
-    dotnet run & sleep 10
-    lsof -ti:5001 | xargs kill
-  displayName: 'Run Web Application'
+# - script: |
+#     ls
+#     cd MyWebApp
+#     dotnet run & sleep 10
+#     lsof -ti:5001 | xargs kill
+#   displayName: 'Run Web Application'
 
 - task: DotNetCoreCLI@2
   inputs:
     azureSubscription: 'Visual Studio Enterprise 訂閱 – MPN(0cbc3466-ab56-4e0d-b53c-4566e585974c)'
     command: 'test'
     workingDirectory: 'MyWebApp.Tests'
-    
-- script: |
-    cd MyWebApp.Tests
-    dotnet add package coverlet.msbuild
-    dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura
-    ls
-  displayName: 'Run Unit Tests with Coverage'
+
+# - script: |
+#     cd MyWebApp.Tests
+#     dotnet add package coverlet.msbuild
+#     dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura
+#     ls
+#   displayName: 'Run Unit Tests with Coverage'
 
 
 
-- task: PublishTestResults@2
-  inputs:
-    testResultsFormat: 'VSTest'
-    testResultsFiles: '$(Build.SourcesDirectory)/TestResults/coverage.cobertura.xml'
-    mergeTestResults: true
-    failTaskOnFailedTests: true
+# - task: PublishTestResults@2
+#   inputs:
+#     testResultsFormat: 'VSTest'
+#     testResultsFiles: '$(Build.SourcesDirectory)/TestResults/coverage.cobertura.xml'
+#     mergeTestResults: true
+#     failTaskOnFailedTests: true
 
 # - task: reportgenerator@5
 #   inputs:
@@ -65,9 +65,9 @@ steps:
 #   artifact: CoverageReports
   
 
-- task: PublishCodeCoverageResults@2
-  inputs:
-    summaryFileLocation: 'MyWebApp.Tests/coverage.cobertura.xml'
+# - task: PublishCodeCoverageResults@2
+#   inputs:
+#     summaryFileLocation: 'MyWebApp.Tests/coverage.cobertura.xml'
 
 # - task: ArchiveFiles@2
 #   inputs:
