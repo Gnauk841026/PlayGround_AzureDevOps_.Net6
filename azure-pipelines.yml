@@ -26,12 +26,12 @@ steps:
     dotnet build
   displayName: 'Build Solution'
 
-- script: |
-    ls
-    cd MyWebApp
-    dotnet run & sleep 10
-    lsof -ti:5001 | xargs kill
-  displayName: 'Run Web Application'
+# - script: |
+#     ls
+#     cd MyWebApp
+#     dotnet run & sleep 10
+#     lsof -ti:5001 | xargs kill
+#   displayName: 'Run Web Application'
 
 - script: |
     cd MyWebApp.Tests
