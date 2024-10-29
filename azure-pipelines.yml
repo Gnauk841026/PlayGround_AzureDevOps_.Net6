@@ -10,6 +10,11 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
+- task: SonarQubePrepare@7
+  inputs:
+    SonarQube: 'Sonarqubeserver'
+    scannerMode: 'dotnet'
+    projectKey: 'PlayGround-AzureDevOps_PlayGround_AzureDevOps_.Net.git_907e9ed7-37b1-4e02-90f9-9b27920ad4b8'
 - task: UseDotNet@2
   inputs:
     packageType: 'sdk'
@@ -40,11 +45,6 @@ steps:
     arguments: '--collect "Code coverage"'
     workingDirectory: 'MyWebApp.Tests'
 
-- task: SonarQubePrepare@7
-  inputs:
-    SonarQube: 'Sonarqubeserver'
-    scannerMode: 'dotnet'
-    projectKey: 'PlayGround-AzureDevOps_PlayGround_AzureDevOps_.Net.git_907e9ed7-37b1-4e02-90f9-9b27920ad4b8'
 
 - task: SonarQubeAnalyze@7
   inputs:
