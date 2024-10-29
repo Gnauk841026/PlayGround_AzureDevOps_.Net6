@@ -40,6 +40,20 @@ steps:
     arguments: '--collect "Code coverage"'
     workingDirectory: 'MyWebApp.Tests'
 
+- task: SonarQubePrepare@7
+  inputs:
+    SonarQube: 'Sonarqubeserver'
+    scannerMode: 'dotnet'
+    projectKey: 'PlayGround-AzureDevOps_PlayGround_AzureDevOps_.Net.git_907e9ed7-37b1-4e02-90f9-9b27920ad4b8'
+
+- task: SonarQubeAnalyze@7
+  inputs:
+    jdkversion: 'JAVA_HOME_17_X64'
+
+- task: SonarQubePublish@7
+  inputs:
+    pollingTimeoutSec: '300'
+
 # - script: |
 #     cd MyWebApp.Tests
 #     dotnet add package coverlet.msbuild
