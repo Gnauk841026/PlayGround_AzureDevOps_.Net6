@@ -45,7 +45,6 @@ steps:
     arguments: '--collect "Code coverage"'
     workingDirectory: 'MyWebApp.Tests'
 
-
 - task: SonarQubeAnalyze@7
   inputs:
     jdkversion: 'JAVA_HOME_17_X64'
@@ -53,32 +52,6 @@ steps:
 - task: SonarQubePublish@7
   inputs:
     pollingTimeoutSec: '300'
-
-# - script: |
-#     cd MyWebApp.Tests
-#     dotnet add package coverlet.msbuild
-#     dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura
-#     ls
-#   displayName: 'Run Unit Tests with Coverage'
-
-
-
-# - task: PublishTestResults@2
-#   inputs:
-#     testResultsFormat: 'VSTest'
-#     testResultsFiles: '$(Build.SourcesDirectory)/TestResults/coverage.cobertura.xml'
-#     mergeTestResults: true
-#     failTaskOnFailedTests: true
-
-# - task: reportgenerator@5
-#   inputs:
-#     reports: '/home/vsts/work/1/s/MyWebApp.Tests/coverage.cobertura.xml'
-#     targetdir: 'MyWebApp.Tests'
-#     publishCodeCoverageResults: true
-
-# - publish: $(Build.SourcesDirectory)/MyWebApp.Tests
-#   artifact: CoverageReports
-  
 
 - task: PublishCodeCoverageResults@2
   inputs:
