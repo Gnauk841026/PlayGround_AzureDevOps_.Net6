@@ -39,26 +39,25 @@ steps:
     dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura
     ls
   displayName: 'Run Unit Tests with Coverage'
-
-# - task: PublishTestResults@2
-#   inputs:
-#     testResultsFormat: 'VSTest'
-#     testResultsFiles: '$(Build.SourcesDirectory)/TestResults/test_results.trx'
-#     failTaskOnFailedTests: true
-#   displayName: 'Publish Test Results'
-
-- task: reportgenerator@5
+- task: PublishTestResults@2
   inputs:
-    reports: '/home/vsts/work/1/s/MyWebApp.Tests/coverage.cobertura.xml'
-    targetdir: 'MyWebApp.Tests'
-    publishCodeCoverageResults: true
+    testResultsFormat: 'VSTest'
+    testResultsFiles: '$(Build.SourcesDirectory)/TestResults/test_results.trx'
+    mergeTestResults: true
+    failTaskOnFailedTests: true
 
-- publish: $(Build.SourcesDirectory)/MyWebApp.Tests
-  artifact: CoverageReports
-  
-# - task: PublishCodeCoverageResults@2
+# - task: reportgenerator@5
 #   inputs:
-#     summaryFileLocation: 'MyWebApp.Tests/coverage.cobertura.xml'
+#     reports: '/home/vsts/work/1/s/MyWebApp.Tests/coverage.cobertura.xml'
+#     targetdir: 'MyWebApp.Tests'
+#     publishCodeCoverageResults: true
+
+# - publish: $(Build.SourcesDirectory)/MyWebApp.Tests
+#   artifact: CoverageReports
+  
+- task: PublishCodeCoverageResults@2
+  inputs:
+    summaryFileLocation: 'MyWebApp.Tests/coverage.cobertura.xml'
 
 - task: ArchiveFiles@2
   inputs:
