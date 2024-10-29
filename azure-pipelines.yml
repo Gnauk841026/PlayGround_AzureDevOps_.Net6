@@ -33,6 +33,12 @@ steps:
     lsof -ti:5001 | xargs kill
   displayName: 'Run Web Application'
 
+- task: DotNetCoreCLI@2
+  inputs:
+    azureSubscription: 'Visual Studio Enterprise 訂閱 – MPN(0cbc3466-ab56-4e0d-b53c-4566e585974c)'
+    command: 'test'
+    workingDirectory: 'MyWebApp.Tests'
+    
 - script: |
     cd MyWebApp.Tests
     dotnet add package coverlet.msbuild
