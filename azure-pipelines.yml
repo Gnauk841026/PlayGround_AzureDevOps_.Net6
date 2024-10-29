@@ -45,7 +45,7 @@ steps:
     azureSubscription: 'Visual Studio Enterprise 訂閱 – MPN(3)(0cbc3466-ab56-4e0d-b53c-4566e585974c)'
     testSelector: 'testRun'
     searchFolder: '$(System.DefaultWorkingDirectory)'
-    runTestsInIsolation: true
+    runTestsInIsolation: false
     codeCoverageEnabled: true
 
 # - task: PublishTestResults@2
