@@ -2,7 +2,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 [TestClass]
-[TestCase(124)]
 public class MyServiceUnitTest
 {
     private ServiceProvider? _serviceProvider;
