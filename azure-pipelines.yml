@@ -7,7 +7,7 @@ trigger:
 - main
 
 pool:
-  vmImage: windows-latest
+  vmImage: ubuntu-latest
 
 steps:
 - task: UseDotNet@2
@@ -26,12 +26,12 @@ steps:
     dotnet build
   displayName: 'Build Solution'
 
-# - script: |
-#     ls
-#     cd MyWebApp
-#     dotnet run & sleep 10
-#     lsof -ti:5001 | xargs kill
-#   displayName: 'Run Web Application'
+- script: |
+    ls
+    cd MyWebApp
+    dotnet run & sleep 10
+    lsof -ti:5001 | xargs kill
+  displayName: 'Run Web Application'
 
 - script: |
     cd MyWebApp.Tests
@@ -40,13 +40,7 @@ steps:
     ls
   displayName: 'Run Unit Tests with Coverage'
 
-- task: VSTest@3
-  inputs:
-    azureSubscription: 'Visual Studio Enterprise 訂閱 – MPN(3)(0cbc3466-ab56-4e0d-b53c-4566e585974c)'
-    testSelector: 'testRun'
-    searchFolder: '$(System.DefaultWorkingDirectory)'
-    runTestsInIsolation: false
-    codeCoverageEnabled: true
+
 
 # - task: PublishTestResults@2
 #   inputs:
