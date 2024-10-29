@@ -31,12 +31,12 @@ steps:
     dotnet build
   displayName: 'Build Solution'
 
-# - script: |
-#     ls
-#     cd MyWebApp
-#     dotnet run & sleep 10
-#     lsof -ti:5001 | xargs kill
-#   displayName: 'Run Web Application'
+- script: |
+    ls
+    cd MyWebApp
+    dotnet run & sleep 10
+    lsof -ti:5001 | xargs kill
+  displayName: 'Run Web Application'
 
 - task: DotNetCoreCLI@2
   inputs:
@@ -80,19 +80,19 @@ steps:
 #   artifact: CoverageReports
   
 
-# - task: PublishCodeCoverageResults@2
-#   inputs:
-#     summaryFileLocation: 'MyWebApp.Tests/coverage.cobertura.xml'
+- task: PublishCodeCoverageResults@2
+  inputs:
+    summaryFileLocation: 'MyWebApp.Tests/coverage.cobertura.xml'
 
-# - task: ArchiveFiles@2
-#   inputs:
-#     rootFolderOrFile: '$(Build.SourcesDirectory)'
-#     includeRootFolder: false
-#     archiveType: 'zip'
-#     archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-#     replaceExistingArchive: true
-#   displayName: 'Archive Build Artifacts'
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: '$(Build.SourcesDirectory)'
+    includeRootFolder: false
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+    replaceExistingArchive: true
+  displayName: 'Archive Build Artifacts'
 
-# - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
-#   artifact: drop
-#   displayName: 'Publish Artifact'
+- publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+  artifact: drop
+  displayName: 'Publish Artifact'
