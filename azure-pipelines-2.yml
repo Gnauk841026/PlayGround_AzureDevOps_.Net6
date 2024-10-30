@@ -1,0 +1,71 @@
+# ASP.NET
+# Build and test ASP.NET projects.
+# Add steps that publish symbols, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/apps/aspnet/build-aspnet-4
+
+trigger: none
+pr: none
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: SonarQubePrepare@7
+  inputs:
+    SonarQube: 'Sonarqube Server'
+    scannerMode: 'dotnet'
+    projectKey: 'PlayGround-AzureDevOps_PlayGround_AzureDevOps_.Net.git_bcfce20d-c6ca-4086-a9b0-dbd39042d864'
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: '6.x'
+
+- script: |
+    dotnet restore
+  displayName: 'Restore NuGet Packages'
+
+- script: |
+    ls
+    cd MyWebApp
+    ls
+    dotnet build
+  displayName: 'Build Solution'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    azureSubscription: 'Visual Studio Enterprise 訂閱 – MPN(0cbc3466-ab56-4e0d-b53c-4566e585974c)'
+    command: 'test'
+    arguments: '--collect "Code coverage"'
+    workingDirectory: 'MyWebApp.Tests'
+
+- task: SonarQubeAnalyze@7
+  inputs:
+    jdkversion: 'JAVA_HOME_17_X64'
+
+- task: SonarQubePublish@7
+  inputs:
+    pollingTimeoutSec: '300'
+
+- task: PublishCodeCoverageResults@2
+  inputs:
+    summaryFileLocation: 'MyWebApp.Tests/coverage.cobertura.xml'
+
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: '$(Build.SourcesDirectory)'
+    includeRootFolder: false
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+    replaceExistingArchive: true
+  displayName: 'Archive Build Artifacts'
+
+- publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+  artifact: drop
+  displayName: 'Publish Artifact'
+
+- task: S3Upload@1
+  inputs:
+    awsCredentials: 'AWS S3'
+    regionName: 'ap-northeast-1'
+    bucketName: 'demo-bucket-20240930'
+    globExpressions: '*.zip'
