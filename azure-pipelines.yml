@@ -13,11 +13,11 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- task: SonarQubePrepare@7
-  inputs:
-    SonarQube: 'Sonarqube Server'
-    scannerMode: 'dotnet'
-    projectKey: 'PlayGround-AzureDevOps_PlayGround_AzureDevOps_.Net.git_bcfce20d-c6ca-4086-a9b0-dbd39042d864'
+# - task: SonarQubePrepare@7
+#   inputs:
+#     SonarQube: 'Sonarqube Server'
+#     scannerMode: 'dotnet'
+#     projectKey: 'PlayGround-AzureDevOps_PlayGround_AzureDevOps_.Net.git_bcfce20d-c6ca-4086-a9b0-dbd39042d864'
 - task: UseDotNet@2
   inputs:
     packageType: 'sdk'
@@ -28,14 +28,11 @@ steps:
   displayName: 'Restore NuGet Packages'
 
 - script: |
-    ls
     cd MyWebApp
-    ls
     dotnet build
   displayName: 'Build Solution'
 
 - script: |
-    ls
     cd MyWebApp
     dotnet run & sleep 10
     lsof -ti:5001 | xargs kill
@@ -48,13 +45,13 @@ steps:
     arguments: '--collect "Code coverage"'
     workingDirectory: 'MyWebApp.Tests'
 
-- task: SonarQubeAnalyze@7
-  inputs:
-    jdkversion: 'JAVA_HOME_17_X64'
+# - task: SonarQubeAnalyze@7
+#   inputs:
+#     jdkversion: 'JAVA_HOME_17_X64'
 
-- task: SonarQubePublish@7
-  inputs:
-    pollingTimeoutSec: '300'
+# - task: SonarQubePublish@7
+#   inputs:
+#     pollingTimeoutSec: '300'
 
 - task: PublishCodeCoverageResults@2
   inputs:
