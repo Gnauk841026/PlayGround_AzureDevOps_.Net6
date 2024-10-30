@@ -59,6 +59,7 @@ steps:
 #     replaceExistingArchive: true
 #   displayName: 'Archive Build Artifacts'
 - task: DotNetCoreCLI@2
+  displayName: restore
   inputs:
     azureSubscription: 'Visual Studio Enterprise 訂閱 – MPN(0cbc3466-ab56-4e0d-b53c-4566e585974c)'
     command: 'restore'
@@ -66,12 +67,14 @@ steps:
     feedsToUse: 'select'
 
 - task: DotNetCoreCLI@2
+  displayName: build
   inputs:
     azureSubscription: 'Visual Studio Enterprise 訂閱 – MPN(0cbc3466-ab56-4e0d-b53c-4566e585974c)'
     command: 'build'
     projects: '**/*.csproj'
     
 - task: DotNetCoreCLI@2
+  displayName: pack
   inputs:
     azureSubscription: 'Visual Studio Enterprise 訂閱 – MPN(0cbc3466-ab56-4e0d-b53c-4566e585974c)'
     command: 'pack'
@@ -79,16 +82,14 @@ steps:
     versioningScheme: 'off'
 
 - task: DotNetCoreCLI@2
+  displayName: publish
   inputs:
     azureSubscription: 'Visual Studio Enterprise 訂閱 – MPN(0cbc3466-ab56-4e0d-b53c-4566e585974c)'
     command: 'publish'
     publishWebProjects: true
     arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)'
     
-- script: |
-    ls
-
-- publish: $(Build.ArtifactStagingDirectory)/$(BuildConfiguration).zip
+- publish: $(Build.ArtifactStagingDirectory)/MyWebApp.zip
   artifact: drop
   displayName: 'Publish Artifact'
 
