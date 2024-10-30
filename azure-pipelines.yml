@@ -14,7 +14,7 @@ steps:
   inputs:
     SonarQube: 'Sonarqubeserver'
     scannerMode: 'dotnet'
-    projectKey: 'PlayGround-AzureDevOps_PlayGround_AzureDevOps_.Net.git_907e9ed7-37b1-4e02-90f9-9b27920ad4b8'
+    projectKey: 'sqa_59a8aec37b47b88722cff08b06c53cbe4b878c3c'
 - task: UseDotNet@2
   inputs:
     packageType: 'sdk'
