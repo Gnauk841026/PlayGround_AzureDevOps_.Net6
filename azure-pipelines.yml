@@ -12,9 +12,9 @@ pool:
 steps:
 - task: SonarQubePrepare@7
   inputs:
-    SonarQube: 'Sonarqubeserver'
+    SonarQube: 'Sonarqube Server'
     scannerMode: 'dotnet'
-    projectKey: 'sqa_59a8aec37b47b88722cff08b06c53cbe4b878c3c'
+    projectKey: 'PlayGround-AzureDevOps_PlayGround_AzureDevOps_.Net.git_bcfce20d-c6ca-4086-a9b0-dbd39042d864'
 - task: UseDotNet@2
   inputs:
     packageType: 'sdk'
