@@ -50,15 +50,21 @@ steps:
 #   inputs:
 #     summaryFileLocation: 'MyWebApp.Tests/coverage.cobertura.xml'
 
-- task: ArchiveFiles@2
-  inputs:
-    rootFolderOrFile: '$(Build.SourcesDirectory)'
-    includeRootFolder: false
-    archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-    replaceExistingArchive: true
-  displayName: 'Archive Build Artifacts'
+# - task: ArchiveFiles@2
+#   inputs:
+#     rootFolderOrFile: '$(Build.SourcesDirectory)'
+#     includeRootFolder: false
+#     archiveType: 'zip'
+#     archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+#     replaceExistingArchive: true
+#   displayName: 'Archive Build Artifacts'
 
+- task: DotNetCoreCLI@2
+  inputs:
+    azureSubscription: 'Visual Studio Enterprise 訂閱 – MPN(0cbc3466-ab56-4e0d-b53c-4566e585974c)'
+    command: 'publish'
+    publishWebProjects: true
+    
 - script: |
     ls
 
