@@ -63,7 +63,7 @@ steps:
   artifact: drop
   displayName: 'Publish Artifact'
 
-- task: S3Upload@1
+- task: AmazonWebServices.aws-vsts-tools.S3Upload.S3Upload@1
   inputs:
     awsCredentials: 'AWS S3'
     regionName: 'ap-northeast-1'
