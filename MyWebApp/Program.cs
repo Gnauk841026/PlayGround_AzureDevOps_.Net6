@@ -24,15 +24,15 @@ else
     app.UseHsts();
 }
 
-// 不指定特定端口，讓應用綁定到所有網路接口
+// 明確指定應用在5001端口上運行
+app.Urls.Add("http://0.0.0.0:5001");
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthorization();
 
 app.MapRazorPages();
-
-// 新增一個Endpoint來展示MyService的功能
 app.MapGet("/greeting", (MyService myService) => myService.GetGreeting());
 
 app.Run();
