@@ -31,11 +31,25 @@ def get_sorted_files():
     # 根據最後修改時間排序，最近的在前
     return sorted(response['Contents'], key=lambda x: x['LastModified'], reverse=True)
 
+def stop_running_app():
+    try:
+        # 使用 ps 查找進程 ID，並關閉應用
+        ps_command = "ps aux | grep '[d]otnet .*MyWebApp.dll' | awk '{print $2}'"
+        pid = subprocess.check_output(ps_command, shell=True).decode().strip()
+
+        if pid:
+            kill_command = f"sudo kill {pid}"
+            subprocess.run(kill_command, shell=True)
+            print("Application stopped successfully.")
+        else:
+            print("No running application found.")
+    except subprocess.CalledProcessError as e:
+        print("Failed to stop application:", e)
+
 def download_and_install(file_key):
     try:
         # 1. 停止正在運行的應用
-        stop_command = "sudo pkill -f '$HOME/dotnet/dotnet MyWebApp.dll'"
-        subprocess.run(stop_command, shell=True)
+        stop_running_app()
 
         # 定義本地下載的路徑
         artifact_local_path = os.path.join(DOWNLOAD_PATH, 'artifact.zip')
