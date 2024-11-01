@@ -98,7 +98,7 @@ steps:
     command: 'publish'
     publishWebProjects: true
     arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)'
-    zipAfterPublish: false
+    modifyOutputPath: false
     
 # - task: PublishPipelineArtifact@1
 #   inputs:
