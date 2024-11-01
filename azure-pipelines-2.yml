@@ -10,11 +10,11 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-# - task: SonarQubePrepare@7
-#   inputs:
-#     SonarQube: 'Sonarqube Server'
-#     scannerMode: 'dotnet'
-#     projectKey: 'PlayGround-AzureDevOps_PlayGround_AzureDevOps_.Net.git_bcfce20d-c6ca-4086-a9b0-dbd39042d864'
+- task: SonarQubePrepare@7
+  inputs:
+    SonarQube: 'Sonarqube Server'
+    scannerMode: 'dotnet'
+    projectKey: 'PlayGround-AzureDevOps_PlayGround_AzureDevOps_.Net.git_bcfce20d-c6ca-4086-a9b0-dbd39042d864'
 
 - task: DotNetCoreCLI@2
   displayName: restore
@@ -75,13 +75,13 @@ steps:
 #     command: 'test'
 #     projects: '**/*[Tt]ests/*.csproj'
 
-# - task: SonarQubeAnalyze@7
-#   inputs:
-#     jdkversion: 'JAVA_HOME_17_X64'
+- task: SonarQubeAnalyze@7
+  inputs:
+    jdkversion: 'JAVA_HOME_17_X64'
 
-# - task: SonarQubePublish@7
-#   inputs:
-#     pollingTimeoutSec: '300'
+- task: SonarQubePublish@7
+  inputs:
+    pollingTimeoutSec: '300'
     
 - task: DotNetCoreCLI@2
   displayName: pack
