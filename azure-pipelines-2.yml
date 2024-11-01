@@ -15,6 +15,22 @@ steps:
 #     SonarQube: 'Sonarqube Server'
 #     scannerMode: 'dotnet'
 #     projectKey: 'PlayGround-AzureDevOps_PlayGround_AzureDevOps_.Net.git_bcfce20d-c6ca-4086-a9b0-dbd39042d864'
+
+- task: DotNetCoreCLI@2
+  displayName: restore
+  inputs:
+    azureSubscription: 'Visual Studio Enterprise 訂閱 – MPN(0cbc3466-ab56-4e0d-b53c-4566e585974c)'
+    command: 'restore'
+    projects: '**/*.csproj'
+    feedsToUse: 'select'
+
+- task: DotNetCoreCLI@2
+  displayName: build
+  inputs:
+    azureSubscription: 'Visual Studio Enterprise 訂閱 – MPN(0cbc3466-ab56-4e0d-b53c-4566e585974c)'
+    command: 'build'
+    projects: '**/*.csproj'
+
 # - task: UseDotNet@2
 #   inputs:
 #     packageType: 'sdk'
@@ -31,12 +47,33 @@ steps:
 #     dotnet build
 #   displayName: 'Build Solution'
 
+- task: DotNetCoreCLI@2
+  inputs:
+    azureSubscription: 'Visual Studio Enterprise 訂閱 – MPN(0cbc3466-ab56-4e0d-b53c-4566e585974c)'
+    command: 'test'
+    arguments: '--collect "Code coverage"'
+    workingDirectory: 'MyWebApp.Tests'
+
+# - task: PublishCodeCoverageResults@2
+#   inputs:
+#     summaryFileLocation: 'MyWebApp.Tests/coverage.cobertura.xml'
+
+# - task: ArchiveFiles@2
+#   inputs:
+#     rootFolderOrFile: '$(Build.SourcesDirectory)'
+#     includeRootFolder: false
+#     archiveType: 'zip'
+#     archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+#     replaceExistingArchive: true
+#   displayName: 'Archive Build Artifacts'
+
+
 # - task: DotNetCoreCLI@2
+#   displayName: test
 #   inputs:
 #     azureSubscription: 'Visual Studio Enterprise 訂閱 – MPN(0cbc3466-ab56-4e0d-b53c-4566e585974c)'
 #     command: 'test'
-#     arguments: '--collect "Code coverage"'
-#     workingDirectory: 'MyWebApp.Tests'
+#     projects: '**/*[Tt]ests/*.csproj'
 
 # - task: SonarQubeAnalyze@7
 #   inputs:
@@ -45,26 +82,30 @@ steps:
 # - task: SonarQubePublish@7
 #   inputs:
 #     pollingTimeoutSec: '300'
-
-# - task: PublishCodeCoverageResults@2
-#   inputs:
-#     summaryFileLocation: 'MyWebApp.Tests/coverage.cobertura.xml'
-
-- task: ArchiveFiles@2
+    
+- task: DotNetCoreCLI@2
+  displayName: pack
   inputs:
-    rootFolderOrFile: '$(Build.SourcesDirectory)'
-    includeRootFolder: false
-    archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-    replaceExistingArchive: true
-  displayName: 'Archive Build Artifacts'
+    azureSubscription: 'Visual Studio Enterprise 訂閱 – MPN(0cbc3466-ab56-4e0d-b53c-4566e585974c)'
+    command: 'pack'
+    packagesToPack: '**/*.csproj'
+    versioningScheme: 'off'
 
-- script: |
-    ls
+- task: DotNetCoreCLI@2
+  displayName: publish
+  inputs:
+    azureSubscription: 'Visual Studio Enterprise 訂閱 – MPN(0cbc3466-ab56-4e0d-b53c-4566e585974c)'
+    command: 'publish'
+    publishWebProjects: true
+    arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)'
+    
 
-- publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
-  artifact: drop
-  displayName: 'Publish Artifact'
+
+# - task: PublishPipelineArtifact@1
+#   inputs:
+#     targetPath: '$(Build.ArtifactStagingDirectory)'
+#     artifact: 'myWebsite-$(Build.BuildId)'
+#     publishLocation: 'pipeline'
 
 - task: S3Upload@1
   inputs:
