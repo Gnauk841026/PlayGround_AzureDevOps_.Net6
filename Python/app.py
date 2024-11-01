@@ -34,7 +34,7 @@ def get_sorted_files():
 def download_and_install(file_key):
     try:
         # 1. 停止正在運行的應用
-        stop_command = "pkill -f '$HOME/dotnet/dotnet MyWebApp.dll'"
+        stop_command = "sudo pkill -f '$HOME/dotnet/dotnet MyWebApp.dll'"
         subprocess.run(stop_command, shell=True)
 
         # 定義本地下載的路徑
