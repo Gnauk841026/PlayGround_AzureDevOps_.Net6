@@ -8,10 +8,17 @@ app = Flask(__name__)
 
 # S3 設置
 BUCKET_NAME = 'demo-bucket-20240930'
-DOWNLOAD_PATH = '/home/Demo'  # 下載並解壓的目標路徑
+DOWNLOAD_PATH = '/home/Demo/App'  # 下載並解壓的目標路徑
+
+AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
 
 # 初始化 S3 客戶端
-s3_client = boto3.client('s3')
+s3_client = boto3.client(
+    's3',
+    aws_access_key_id=AWS_ACCESS_KEY_ID,
+    aws_secret_access_key=AWS_SECRET_ACCESS_KEY
+)
 
 def get_sorted_files():
     # 列出 S3 中所有物件
