@@ -24,14 +24,10 @@ else
     app.UseHsts();
 }
 
-// 指定使用特定端口運行應用程序
-app.Urls.Add("http://localhost:5001");
-
+// 不指定特定端口，讓應用綁定到所有網路接口
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
-
 app.UseAuthorization();
 
 app.MapRazorPages();
