@@ -33,18 +33,23 @@ def get_sorted_files():
 
 def download_and_install(file_key):
     try:
+        # 1. 停止正在運行的應用
+        stop_command = "pkill -f '$HOME/dotnet/dotnet MyWebApp.dll'"
+        subprocess.run(stop_command, shell=True)
+
         # 定義本地下載的路徑
         artifact_local_path = os.path.join(DOWNLOAD_PATH, 'artifact.zip')
 
-        # 從 S3 下載指定的 Artifact
+        # 2. 從 S3 下載指定的 Artifact
         s3_client.download_file(BUCKET_NAME, file_key, artifact_local_path)
 
-        # 解壓縮文件
+        # 3. 解壓縮文件
         with zipfile.ZipFile(artifact_local_path, 'r') as zip_ref:
             zip_ref.extractall(DOWNLOAD_PATH)
 
-        # 執行 .NET 程式 (假設主程式為 MyApp.dll)
-        result = subprocess.run(['dotnet', os.path.join(DOWNLOAD_PATH, 'MyApp.dll')], capture_output=True, text=True)
+        # 4. 執行 .NET 程式 (假設主程式為 MyWebApp.dll)
+        start_command = f"$HOME/dotnet/dotnet {os.path.join(DOWNLOAD_PATH, 'MyWebApp.dll')}"
+        result = subprocess.run(start_command, shell=True, capture_output=True, text=True)
 
         return {
             "message": "Artifact downloaded, extracted, and application executed successfully.",
