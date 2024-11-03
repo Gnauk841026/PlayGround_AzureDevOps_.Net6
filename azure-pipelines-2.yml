@@ -101,11 +101,11 @@ steps:
     
 
 
-# - task: PublishPipelineArtifact@1
-#   inputs:
-#     targetPath: '$(Build.ArtifactStagingDirectory)'
-#     artifact: 'myWebsite-$(Build.BuildId)'
-#     publishLocation: 'pipeline'
+- task: PublishPipelineArtifact@1
+  inputs:
+    targetPath: '$(Build.ArtifactStagingDirectory)'
+    artifact: 'myWebsite-$(Build.BuildId)'
+    publishLocation: 'pipeline'
 
 - task: S3Upload@1
   inputs:
